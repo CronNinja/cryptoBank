@@ -1,15 +1,15 @@
 import React from 'react';
-import ATMDeposit from './ATMDeposit';
+import Transactor from './Transactor';
 import Card from 'react-bootstrap/Card';
 
-const Currency = ({currentType}) => {
+const Currency = ({currencyType}) => {
   const [deposit, setDeposit] = React.useState(0);
   const [totalState, setTotalState] = React.useState(0);
   const [isDeposit, setIsDeposit] = React.useState(true);
   const [atmMode, setAtmMode] = React.useState("");
   const [validTransaction, setValidTransaction] = React.useState(false);
 
-  let status = `${currentType} Balance: ${totalState} `;
+  let status = `${currencyType} Balance: ${totalState} `;
   const handleChange = (event) => {
     const returnValue = event.target.value;
     console.log(`handleChange ${returnValue}`);
@@ -58,7 +58,7 @@ const Currency = ({currentType}) => {
           </select>
           { atmMode &&
           <>
-            <ATMDeposit onChange={handleChange} isDeposit={isDeposit} validTransaction={validTransaction}></ATMDeposit>
+            <Transactor onChange={handleChange} isDeposit={isDeposit} validTransaction={validTransaction}></Transactor>
             </>
           }
         </Card.Text>

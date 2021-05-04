@@ -1,4 +1,4 @@
-const ATMDeposit = ({ onChange, isDeposit, validTransaction }) => {
+const Transactor = ({ onChange, isDeposit, validTransaction }) => {
   const choice = ['Deposit', 'Withdraw'];
   console.log(`ATM isDeposit: ${isDeposit}`);
   return (
@@ -13,4 +13,4 @@ const ATMDeposit = ({ onChange, isDeposit, validTransaction }) => {
   );
 };
 
-export default ATMDeposit
+export default Transactor

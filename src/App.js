@@ -18,11 +18,11 @@ const App = () => (
 </Jumbotron>
 <Container>
   <CardDeck>
-    <Currency currentType="US Dollar" />
-      <Currency currentType="BTC" />
-      <Currency currentType="ETH" />
-      <Currency currentType="XRP" />
-    </CardDeck>
+    <Currency currentType="USD" id="Currency-USD"/>
+    <Currency currentType="BTC" id="Currency-BTC"/>
+    <Currency currentType="ETH" id="Currency-ETH"/>
+    <Currency currentType="XRP" id="Currency-XRP"/>
+  </CardDeck>
 </Container>
     
   </div>
