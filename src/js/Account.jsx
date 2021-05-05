@@ -1,8 +1,7 @@
 import React from 'react';
 import Transactor from './Transactor';
 import Card from 'react-bootstrap/Card';
-import axios from 'axios';
-
+import USDValue from './USDValue';
 
 const Currency = ({currencyType}) => {
   const [deposit, setDeposit] = React.useState(0);
@@ -10,36 +9,10 @@ const Currency = ({currencyType}) => {
   const [isDeposit, setIsDeposit] = React.useState(true);
   const [atmMode, setAtmMode] = React.useState("");
   const [validTransaction, setValidTransaction] = React.useState(false);
-  const [usdValue, setUsdValue] = React.useState(0);
-
-  const [data, setData] = React.useState({ results: [] });
-	const [isError, setIsError] = React.useState(false);
-	const [url, setUrl] = React.useState(
-		`https://coincodex.com/api/coincodex/get_coin/${currencyType}`
-	);
-	const [isLoading, setIsLoading] = React.useState(false);
-
-	React.useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			try {
-				const result = await axios(url);
-				setData(result.data);
-        console.log(result.data);
-			} catch (error) {
-				setIsError(true);
-			}
-			setIsLoading(false);
-		};
-
-		fetchData();
-	}, [url]);
-
 
   let status = `${currencyType} Balance: ${totalState} `;
   const handleChange = (event) => {
     const returnValue = event.target.value;
-    console.log(`handleChange ${returnValue}`);
     setDeposit(Number(returnValue));
     if(returnValue <= 0){
       setValidTransaction(false);
@@ -78,7 +51,7 @@ const Currency = ({currencyType}) => {
         <form onSubmit={handleSubmit}>
         <Card.Title id="total">{status}</Card.Title>
         <Card.Subtitle>
-          <label>USD Value: ${usdValue}</label>
+          <label>USD Value: $<USDValue crypto={currencyType} total={totalState}/></label>
         </Card.Subtitle>
         <Card.Text>
           <label>Action:</label>
