@@ -43,8 +43,9 @@ const App = () => {
           }
         </CardDeck>
       </Container>
-      <hr />
-      <History totals={totals}/>
+      <Container style={{ paddingTop: "25px" }}>
+        <History totals={totals}/>
+      </Container>
     </div>
   )
 };
