@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: `/get_coin/`
+  baseURL: `"https://coincodex.com/api/coincodex/get_coin/`
 });
