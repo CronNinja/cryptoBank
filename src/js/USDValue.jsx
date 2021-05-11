@@ -8,7 +8,7 @@ export default class USDValue extends Component {
       data: []}
   }
   async componentDidMount() {
-    const response = await API(this.props.crypto);
+    const response = await API(this.props.symbol);
     this.setState({ data: response.data });
   }
   render() {

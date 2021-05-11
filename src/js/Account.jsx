@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState} from 'react';
 import Transactor from './Transactor';
 import Card from 'react-bootstrap/Card';
 import USDValue from './USDValue';
+import Exchange from './Exchange';
+import GetDate from './GetData';
 
-const Currency = ({currencyType}) => {
-  const [deposit, setDeposit] = React.useState(0);
-  const [totalState, setTotalState] = React.useState(0);
-  const [isDeposit, setIsDeposit] = React.useState(true);
-  const [atmMode, setAtmMode] = React.useState("");
-  const [validTransaction, setValidTransaction] = React.useState(false);
+const Currency = ({symbol, totals, setTotals}) => {
+  const [deposit, setDeposit] = useState(0);
+  const [totalState, setTotalState] = useState(0);
 
-  let status = `${currencyType} Balance: ${totalState} `;
+  const [isDeposit, setIsDeposit] = useState(true);
+  const [atmMode, setAtmMode] = useState("");
+  const [validTransaction, setValidTransaction] = useState(false);
+
+  let status = `${symbol} Balance: ${totalState} `;
   const handleChange = (event) => {
     const returnValue = event.target.value;
     setDeposit(Number(returnValue));
@@ -31,6 +34,7 @@ const Currency = ({currencyType}) => {
   const handleSubmit = (event) => {
     let newTotal = isDeposit ? totalState + deposit : totalState - deposit;
     setTotalState(newTotal);
+    setTotals([...totals, {symbol: symbol, total: newTotal, timestamp: GetDate(), action: atmMode + " " + symbol + ": " + deposit}])
     setValidTransaction(false);
     event.preventDefault();
   };
@@ -46,12 +50,13 @@ const Currency = ({currencyType}) => {
   }
 
   return (
+    <>
     <Card>
       <Card.Body>
         <form onSubmit={handleSubmit}>
         <Card.Title id="total">{status}</Card.Title>
         <Card.Subtitle>
-          <label>USD Value: $<USDValue crypto={currencyType} total={totalState}/></label>
+          <label>USD Value: $<USDValue symbol={symbol} total={totalState}/></label>
         </Card.Subtitle>
         <Card.Text>
           <label>Action:</label>
@@ -59,17 +64,20 @@ const Currency = ({currencyType}) => {
             <option id="no-selection" value=""></option>
             <option id="deposit-selection" value="Deposit">Deposit</option>
             <option id="withdraw-selection" value="Withdraw">Withdraw</option>
+            <option id="exchange-selection" value="Exchange">Exchange</option>
           </select>
-          { atmMode &&
-          <>
-            <Transactor onChange={handleChange} isDeposit={isDeposit} validTransaction={validTransaction}></Transactor>
-            </>
+          { (atmMode === "Deposit" || atmMode === "Withdraw") &&
+            <Transactor onChange={handleChange} isDeposit={isDeposit} validTransaction={validTransaction} currency={symbol} />
           }
         </Card.Text>
       </form>
+      {
+      atmMode === "Exchange" &&
+        <Exchange symbol={symbol} total={totalState} />
+      }
       </Card.Body>
     </Card>
-    
+    </>
   );
 };
 
