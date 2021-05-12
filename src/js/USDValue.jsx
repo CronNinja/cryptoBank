@@ -11,7 +11,9 @@ export default class USDValue extends Component {
   // const response = await API(this.props.symbol);
   //  this.setState({ data: response.data });
 
-    axios.get(`https://coincodex.com/api/coincodex/get_coin/${this.props.symbol}`)
+    axios.get(`https://coincodex.com/api/coincodex/get_coin/${this.props.symbol}`,
+      { headers: {'X-Custom-Header': 'foobar'} }
+    )
       .then(response => {
         this.setState({ data: response.data });
       })
